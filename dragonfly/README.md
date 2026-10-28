@@ -9,14 +9,16 @@ Dragonfly is an in-memory data store built for modern application workloads. It 
 The installer downloads the official Dragonfly binary from the [GitHub releases](https://github.com/dragonflydb/dragonfly/releases) (x86_64 or aarch64).
 The version is set with the `Dragonfly Version` variable (`2.0.2` by default, or `latest`). Reinstall the server to change it, your data is kept.
 
-The server runs on the `ghcr.io/parkervcp/yolks:redis_8` image, which provides `redis-cli` for the console.
-The exact version is printed in the console on every start (`dragonfly_version:...`).
+The server runs on the `ghcr.io/parkervcp/yolks:redis_8` image.
+The exact version is printed in the console on every start (`Starting dragonfly df-v...`).
 
 ## Server Startup
 
-The console is already authenticated with the password set in the `SERVER_PASSWORD` variable, so commands such as `SAVE` or `INFO` can be run directly.
+Dragonfly runs in the foreground and its log is shown in the console. The server is marked as started once Dragonfly logs `listening on`.
 
-The server is marked as started once Dragonfly answers a `PING`, so it only shows as running when it is ready to accept connections.
+The console does not accept commands. Connect with any Redis client (for example `redis-cli -h <ip> -p <port> -a <password>`) using the password set in the `SERVER_PASSWORD` variable.
+
+Stopping the server sends `SIGINT` to Dragonfly, which saves a final snapshot before it exits.
 
 ## Memory and Threads
 

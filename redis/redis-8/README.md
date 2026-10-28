@@ -7,13 +7,15 @@ Redis is an open source (BSD licensed), in-memory data structure store, used as 
 ## Redis Version
 
 This egg uses the `ghcr.io/parkervcp/yolks:redis_8` image, which is rebuilt every week from the official Redis 8 image and ships the latest Redis 8 release available for its base image.
-The exact version is printed in the console on every start (`redis_version:...`).
+The exact version is printed in the console on every start (`Redis version=...`).
 
 ## Server Startup
 
-The console is already authenticated with the password set in the `SERVER_PASSWORD` variable, so commands such as `SAVE` or `INFO` can be run directly.
+Redis runs in the foreground and its log is shown in the console. The server is marked as started once Redis logs `Ready to accept connections`.
 
-The server is marked as started once Redis answers a `PING`, so it only shows as running when it is ready to accept connections.
+The console does not accept Redis commands. Connect with any Redis client (for example `redis-cli -h <ip> -p <port> -a <password>`) using the password set in the `SERVER_PASSWORD` variable.
+
+Stopping the server sends `SIGINT` to Redis, which saves a final snapshot (`dump.rdb`) before it exits.
 
 ## Migrating from an older Redis
 
