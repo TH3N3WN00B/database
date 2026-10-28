@@ -36,6 +36,7 @@ Switch a Redis server to this egg and reinstall it. No other step is needed:
 * The installer copies the Redis `dump.rdb` to `backups/<date>-redis-<version>/`.
 * Dragonfly imports `dump.rdb` on its first start. From then on it saves and loads its own `dump-*.dfs` files, and the old `dump.rdb` is no longer used.
 * This was tested with data written by Redis 5.0, 6.2, 7.4 and 8.2 (strings, hashes, lists, sets, sorted sets, TTLs and several databases). Data from Redis modules, or types that only exist in newer Redis versions, may not be supported by Dragonfly.
+* Dragonfly 2.0.2 only reads the data format of Redis 8.4 and older. Redis 8.6 and newer save in a newer format, and the `redis_8` image ships the latest Redis 8, so data from the Redis 8 egg can't be imported yet. Dragonfly then stops on start with `RDB Version <n> is not supported` and leaves `dump.rdb` as it is. Switch the server back to the Redis 8 egg to keep using that data.
 
 Going back to Redis is not automatic, because Dragonfly saves in its own format. To return to Redis with the original data, stop the server and copy `dump.rdb` back from `backups/`.
 
