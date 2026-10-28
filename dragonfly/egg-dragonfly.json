@@ -14,7 +14,7 @@
         "ghcr.io\/parkervcp\/yolks:redis_8": "ghcr.io\/parkervcp\/yolks:redis_8"
     },
     "file_denylist": [],
-    "startup": "exec .\/dragonfly --logtostderr --bind 0.0.0.0 --port {{SERVER_PORT}} --requirepass '{{SERVER_PASSWORD}}' --dir \/home\/container --dbfilename dump --maxmemory {{SERVER_MEMORY}}mb --proactor_threads {{DF_THREADS}}",
+    "startup": "exec .\/dragonfly --logtostderr --bind 0.0.0.0 --port {{SERVER_PORT}} --requirepass '{{SERVER_PASSWORD}}' --dir \/home\/container --dbfilename dump --snapshot_cron \"$SNAPSHOT_CRON\" --maxmemory {{SERVER_MEMORY}}mb --proactor_threads {{DF_THREADS}}",
     "config": {
         "files": "{}",
         "startup": "{\r\n    \"done\": \"listening on\"\r\n}",
@@ -73,7 +73,7 @@
         {
             "name": "Snapshot Schedule",
             "description": "Cron expression for periodic snapshots to disk, for example *\/5 * * * * for every 5 minutes. Leave empty to only save on shutdown.",
-            "env_variable": "DFLY_snapshot_cron",
+            "env_variable": "SNAPSHOT_CRON",
             "default_value": "*\/5 * * * *",
             "user_viewable": true,
             "user_editable": true,
